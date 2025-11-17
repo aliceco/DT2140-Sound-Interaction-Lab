@@ -12,7 +12,7 @@ let dspNodeParams = null;
 let jsonParams = null;
 
 // Change here to ("tuono") depending on your wasm file name
-const dspName = "bubble1";
+const dspName = "engine";
 const instance = new FaustWasm2ScriptProcessor(dspName);
 
 // output to window or npm package module
@@ -25,7 +25,7 @@ if (typeof module === "undefined") {
 }
 
 // The name should be the same as the WASM file, so change tuono with brass if you use brass.wasm
-bubble1.createDSP(audioContext, 1024)
+engine.createDSP(audioContext, 1024)
     .then(node => {
         dspNode = node;
         dspNode.connect(audioContext.destination);
@@ -52,14 +52,14 @@ bubble1.createDSP(audioContext, 1024)
 //==========================================================================================
 
 function accelerationChange(accx, accy, accz) {
-    // playAudio()
+    playAudio(accx, accy, accz)
 }
 
 function rotationChange(rotx, roty, rotz) {
 }
 
 function mousePressed() {
-    playAudio()
+    playAudio(mouseX/windowWidth)
     // Use this for debugging from the desktop!
 }
 
@@ -96,7 +96,7 @@ function getMinMaxParam(address) {
 //==========================================================================================
 
 function playAudio() {
-    if (!dspNode) {
+    if (!dspNode) { 
         return;
     }
     if (audioContext.state === 'suspended') {
@@ -106,8 +106,8 @@ function playAudio() {
     // them printed on the console of your browser when you load the page)
     // For example if you change to a bell sound, here you could use "/churchBell/gate" instead of
     // "/thunder/rumble".
-    dspNode.setParamValue("/bubble1/drop", 1)
-    setTimeout(() => { dspNode.setParamValue("/bubble1/drop", 0) }, 100);
+    dspNode.setParamValue("/engine/maxSpeed", 1)
+    setTimeout(() => { dspNode.setParamValue("/engine/maxSpeed", 0.5) }, 1);
 }
 
 //==========================================================================================
