@@ -56,7 +56,9 @@ function accelerationChange(accx, accy, accz) {
 }
 
 function rotationChange(rotx, roty, rotz) {
-    playAudio(rotz);
+    if(rotz > 257 && rotz < 280 && roty > 3 && roty < 6 && rotx > -10 && rotx < 10){
+        playAudio()
+    }
 }
 
 function mousePressed() {
@@ -96,17 +98,27 @@ function getMinMaxParam(address) {
 //
 //==========================================================================================
 
-function playAudio(tilt) {
+// function playAudio(tilt) {
+//     if (!dspNode) {
+//         return;
+//     }
+//     if (audioContext.state === 'suspended') {
+//         return;
+//     }
+//     console.log(tilt)
+//     dspNode.setParamValue("/door/door/position", tilt)
+// }
+
+function playAudio() {
     if (!dspNode) {
         return;
     }
     if (audioContext.state === 'suspended') {
         return;
     }
-    console.log(tilt)
-    dspNode.setParamValue("/door/door/position", tilt)
+    dspNode.setParamValue("/door/door/position", 1)
+    setTimeout(() => { dspNode.setParamValue("/door/door/position", 0) }, 100);
 }
-
 //==========================================================================================
 // END
 //==========================================================================================
