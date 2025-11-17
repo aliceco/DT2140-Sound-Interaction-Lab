@@ -55,7 +55,6 @@ function accelerationChange(accx, accy, accz) {
     // playAudio()
 }
 
-let doorPlaying = false;  
 
 function rotationChange(rotx, roty, rotz) {
     // Target orientation bounds
@@ -65,15 +64,11 @@ function rotationChange(rotx, roty, rotz) {
         rotx > -10 && rotx < 10
     );
 
-    if (withinTarget && !doorPlaying) {
+    if (withinTarget ) {
         // Entered the target orientation → start sound
         playAudio(); // use 1 as max pressure
-        doorPlaying = true;
-    } else if (!withinTarget && doorPlaying) {
-        // Left the target orientation → stop sound
-        stopAudio();
-        doorPlaying = false;
-    }
+       
+    } 
 }
 
 function mousePressed() {
