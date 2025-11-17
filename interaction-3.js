@@ -55,9 +55,24 @@ function accelerationChange(accx, accy, accz) {
     // playAudio()
 }
 
+let doorPlaying = false;  
+
 function rotationChange(rotx, roty, rotz) {
-    if(rotz > 257 && rotz < 280 && roty > 3 && roty < 6 && rotx > -10 && rotx < 10){
-        playAudio()
+    // Target orientation bounds
+    const withinTarget = (
+        rotz > 257 && rotz < 280 &&
+        roty > 3 && roty < 6 &&
+        rotx > -10 && rotx < 10
+    );
+
+    if (withinTarget && !doorPlaying) {
+        // Entered the target orientation → start sound
+        playAudio(); // use 1 as max pressure
+        doorPlaying = true;
+    } else if (!withinTarget && doorPlaying) {
+        // Left the target orientation → stop sound
+        stopAudio();
+        doorPlaying = false;
     }
 }
 
@@ -98,17 +113,6 @@ function getMinMaxParam(address) {
 //
 //==========================================================================================
 
-// function playAudio(tilt) {
-//     if (!dspNode) {
-//         return;
-//     }
-//     if (audioContext.state === 'suspended') {
-//         return;
-//     }
-//     console.log(tilt)
-//     dspNode.setParamValue("/door/door/position", tilt)
-// }
-
 function playAudio() {
     if (!dspNode) {
         return;
@@ -116,9 +120,25 @@ function playAudio() {
     if (audioContext.state === 'suspended') {
         return;
     }
+    // console.log(pressure)
     dspNode.setParamValue("/door/door/position", 1)
-    setTimeout(() => { dspNode.setParamValue("/door/door/position", 0) }, 100);
 }
+
+function stopAudio() {
+    if (!dspNode) return;
+    dspNode.setParamValue("/door/door/position", 0); // reset position to stop sound
+}
+
+// function playAudio() {
+//     if (!dspNode) {
+//         return;
+//     }
+//     if (audioContext.state === 'suspended') {
+//         return;
+//     }
+//     dspNode.setParamValue("/door/door/position", 1)
+//     setTimeout(() => { dspNode.setParamValue("/door/door/position", 0) }, 100);
+// }
 //==========================================================================================
 // END
 //==========================================================================================
