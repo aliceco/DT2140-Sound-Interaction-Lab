@@ -58,7 +58,10 @@ function accelerationChange(accx, accy, accz) {
 function rotationChange(rotx, roty, rotz) {
     if (rotx > 70) {
         playAudio();  // turn sound on
+    } else {
+        stopAudio();
     }
+    
 }
 
 function mousePressed() {
@@ -111,6 +114,13 @@ function playAudio() {
     // "/thunder/rumble".
     dspNode.setParamValue("/engine/gate", 1)
     setTimeout(() => { dspNode.setParamValue("/engine/gate", 0.5) }, 1);
+
+
+}
+
+function stopAudio() {
+    if (!dspNode) return;
+    dspNode.setParamValue("/engine/gate", 0);
 }
 
 //==========================================================================================
