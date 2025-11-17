@@ -55,7 +55,7 @@ function accelerationChange(accx, accy, accz) {
     // playAudio()
 }
 
-function rotationChange(rotx, roty, rotz) {
+function rotationChange(rotx, roty, rotz) { 
 }
 
 function mousePressed() {
@@ -75,7 +75,6 @@ function deviceShaken() {
     shaketimer = millis();
     statusLabels[0].style("color", "pink");
     playAudio();
-    stopAudio();
 }
 
 function getMinMaxParam(address) {
@@ -105,11 +104,6 @@ function playAudio() {
     }
     dspNode.setParamValue("/torpedo/trigger", 1)
     setTimeout(() => { dspNode.setParamValue("/torpedo/trigger", 0) }, 100);
-}
-
-function stopAudio(){
-    if (!dspNode) return;
-    dspNode.setParamValue("/torpedo/trigger", 0);
 }
 //==========================================================================================
 // END
