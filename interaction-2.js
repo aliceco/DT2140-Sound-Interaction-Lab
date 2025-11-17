@@ -75,6 +75,7 @@ function deviceShaken() {
     shaketimer = millis();
     statusLabels[0].style("color", "pink");
     playAudio();
+    stopAudio();
 }
 
 function getMinMaxParam(address) {
@@ -106,6 +107,10 @@ function playAudio() {
     setTimeout(() => { dspNode.setParamValue("/torpedo/trigger", 0) }, 100);
 }
 
+function stopAudio(){
+    if (!dspNode) return;
+    dspNode.setParamValue("/torpedo/trigger", 0);
+}
 //==========================================================================================
 // END
 //==========================================================================================
